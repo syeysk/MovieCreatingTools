@@ -1,5 +1,6 @@
 import os
 import os.path
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -39,10 +40,19 @@ def make_vertical(img):
     return new_img
 
 
-def image_walker(path_images):
-    for directory, _, filenames in os.walk(path_images):
-        for filename in filenames:
-            yield os.path.join(directory, filename)
+def image_walker(any_pathes):
+    for any_path in any_pathes:
+        any_path = Path(any_path)
+        if not any_path.exists():
+            print(f'Путь не существует: {any_path}')
+            continue
+
+        if any_path.is_dir():
+            for directory, _, filenames in os.walk(any_pathes):
+                for filename in filenames:
+                    yield Path(os.path.join(directory, filename))
+        else:
+            yield any_path
 
 
 path_images_gen = image_walker(r'A:\Изображения\Личное\Растения\tapo_day')
