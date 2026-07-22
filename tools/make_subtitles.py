@@ -1,5 +1,9 @@
 import argparse
 from pathlib import Path
+import uuid
+
+page_height = 508
+page_width = 285.75
 
 START = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
@@ -53,7 +57,7 @@ PAGE = '''    <inkscape:page
        height="{height}"
        id="page{page_id}"
        inkscape:label="{scene_index:03}-{file_index:03}"
-       inkscape:export-filename=".\subtitle-{scene_index:03}-{file_index:03}.png"
+       inkscape:export-filename=".\\subtitle-{scene_index:03}-{file_index:03}.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
 '''
@@ -187,7 +191,8 @@ class SVG:
             svg_file.write(END)
 
 
-def t2subtitles(text_file, subtitles_file_path):
+def t2subtitles(text_file, options=dict()):
+    subtitles_file_path = options['out_dir'] / f't2subtitles-{uuid.uuid4().hex}.svg'
     scene = 1
     y = 0
     x = 0
@@ -209,17 +214,5 @@ def t2subtitles(text_file, subtitles_file_path):
             x += page_width
             scene_word_index += 1
 
-
     svg.write(subtitles_file_path)
-
-
-if __name__ == '__main__':
-    page_height = 508
-    page_width = 285.75
-
-    args = parse_args()
-    project_path = Path(args.project)
-    text_file_path = project_path / 'text_to_subtitles.txt'
-    subtitles_file_path = project_path / 'исходники' / 'subtitles.svg'
-    with open(text_file_path, 'r', encoding='utf-8') as text_file:
-        t2subtitles(text_file, subtitles_file_path)
+    return subtitles_file_path
