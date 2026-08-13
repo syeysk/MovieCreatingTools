@@ -2,12 +2,12 @@ import subprocess
 from uuid import uuid4
 from pathlib import Path
 
-inkscape_path = r'C:\Program Files\Inkscape\bin\inkscape.exe'
+from config import INKSCAPE_PATH
 
 
 def check_inkscape_version(major, minor):
     try:
-        result = subprocess.run([inkscape_path, '--version'], check=True, capture_output=True, text=True)
+        result = subprocess.run([INKSCAPE_PATH, '--version'], check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as error:
         print('error:', error.stderr)
     else:
@@ -28,7 +28,7 @@ def export_svg(svg_path: Path, pages='all', options=dict()):
 
     try:
         result = subprocess.run(
-            [inkscape_path, '--export-type=png', f'--export-page={pages}', '-o', str(out_dir / 'output.png'), str(svg_path)],
+            [INKSCAPE_PATH, '--export-type=png', f'--export-page={pages}', '-o', str(out_dir / 'output.png'), str(svg_path)],
             check=True,
             capture_output=True,
             text=True,

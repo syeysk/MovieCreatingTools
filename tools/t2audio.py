@@ -3,18 +3,15 @@
 
 - one line is one audio file (if it's not empty file)
 - block between empty lines  is a scene
-
-requirements:
-#git+https://github.com/grpc/grpc.git
-grpcio==1.64.1
 """
 
 import argparse
 import base64
 from pathlib import Path
 
-import grpc
 import requests
+
+from config import YANDEX_CLOUD_SECRET_KEY
 
 
 def t2audio(text, audio_file_path):
@@ -27,7 +24,7 @@ def t2audio(text, audio_file_path):
         ]
     }
     headers = {
-        'Authorization': f'Api-Key {secret_key}'
+        'Authorization': f'Api-Key {YANDEX_CLOUD_SECRET_KEY}'
     }
     response = requests.post(target, json=request_data, timeout=25, headers=headers)
     if response.status_code == 200:
