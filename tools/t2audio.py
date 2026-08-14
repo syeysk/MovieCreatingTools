@@ -37,7 +37,7 @@ def t2audio(text, audio_file_path):
             audio_file.write(chunk_bin)
 
     from http.client import responses
-    print('   ', response.status_code, responses[response.status_code]), response.text)
+    print('   ', response.status_code, responses[response.status_code], response.text)
 
 
 def parse_args():
