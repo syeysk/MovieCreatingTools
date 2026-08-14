@@ -11,13 +11,14 @@ django.setup()
 # from django.conf import settings
 
 from gardensunion.base.gui_main_window import MainWindow
+from mediaworkers.gui_windows import GUISketch
 
 
 class MainWindow(MainWindow):
     def __init__(self):
-        self.gui_models = []
+        self.gui_models = [GUISketch]
         super().__init__()
-        self.setWindowTitle('HumanEnv - Your human environment')
+        self.setWindowTitle('Media workers - Make and run sketches')
         # self.setWindowIcon(QIcon(str(settings.BASE_DIR.parent / 'images/tie_butterfly.jpg')))
         self.entity_types.select_current()
 
